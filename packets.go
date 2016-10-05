@@ -18,12 +18,23 @@ import (
 	"io"
 	"math"
 	"time"
+	"database/sql"
 )
 
 // Packets documentation:
 // http://dev.mysql.com/doc/internals/en/client-server-protocol.html
 
+
+func ReadPacket(db *sql.DB) ([]byte, error) {
+	return mc.readPacket()
+}
+
+func (mc *mysqlConn) WritePacket(data []byte) error {
+	return mc.writePacket(data)
+}
+
 // Read packet to buffer 'data'
+
 func (mc *mysqlConn) readPacket() ([]byte, error) {
 	var payload []byte
 	for {
